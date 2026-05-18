@@ -1,4 +1,4 @@
-ENG ver:
+ENG version:
 HOME
 
 ├── Authentication
@@ -144,8 +144,8 @@ HOME
         ├── Error Logs (Track system errors and failures)
         ├── Activity Logs (Track user activities)
         └── System Health (Monitor overall system performance and status)
----------------------------------------------------------------------------------------------
-Viet ver:
+----------------------------------------------------------------------------------------------------    
+VIE version:
 HOME
 
 ├── Xác thực hệ thống
