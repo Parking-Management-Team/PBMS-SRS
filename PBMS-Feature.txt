@@ -1,4 +1,4 @@
-ENG ver:
+ENG version:
 HOME
 
 ├── Authentication
@@ -91,6 +91,7 @@ HOME
 │   │   ├── Slot Status Control (Control parking slot statuses)
 │   │   ├── Reserved Slots (Manage reserved parking slots)
 │   │   ├── Maintenance Slots (Manage slots under maintenance or repair)
+│   │   ├── Parking Rules (Manage parking regulations and policies)
 │   │   └── Locked Slots (Manage temporarily disabled parking slots)
 
 │   ├── Pricing Management
@@ -128,7 +129,6 @@ HOME
     │   └── Access Control (Control access to system resources)
 
     ├── System Configuration
-    │   ├── Parking Rules (Configure parking regulations and policies)
     │   ├── Notification Settings (Configure system notifications)
     │   ├── Payment Configuration (Configure payment settings)
     │   └── Security Settings (Configure system security settings)
@@ -145,7 +145,7 @@ HOME
         ├── Activity Logs (Track user activities)
         └── System Health (Monitor overall system performance and status)
 ---------------------------------------------------------------------------------------------
-Viet ver:
+VIE version:
 HOME
 
 ├── Xác thực hệ thống
@@ -244,6 +244,7 @@ HOME
 │   │   ├── Quy tắc tính phí (Thiết lập quy tắc tính phí gửi xe)
 │   │   ├── Giá theo loại xe (Thiết lập giá theo từng loại phương tiện)
 │   │   ├── Giá giờ cao điểm (Thiết lập chính sách giá theo khung giờ cao điểm)
+│   │   ├── Quy định gửi xe (Thiết lập quy định và chính sách gửi xe)
 │   │   └── Chính sách phụ phí/phạt (Quản lý phụ phí và các khoản phạt)
 
 │   ├── Phân tích & Báo cáo
@@ -275,7 +276,6 @@ HOME
     │   └── Kiểm soát truy cập (Kiểm soát quyền truy cập vào tài nguyên hệ thống)
 
     ├── Cấu hình hệ thống
-    │   ├── Quy định gửi xe (Cấu hình quy định và chính sách gửi xe)
     │   ├── Cài đặt thông báo (Cấu hình thông báo hệ thống)
     │   ├── Cấu hình thanh toán (Thiết lập cấu hình thanh toán)
     │   └── Cài đặt bảo mật (Thiết lập cấu hình bảo mật hệ thống)
