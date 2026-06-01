@@ -2,6 +2,151 @@
 
 ---
 
+# Table of Contents
+
+## 1. Introduction
+
+### 1.1 Purpose
+
+### 1.2 Scope
+
+### 1.3 Definitions, Acronyms, Abbreviations
+
+### 1.4 References
+
+### 1.5 Document Overview
+
+## 2. Overall Description
+
+### 2.1 Product Perspective
+
+### 2.2 Product Functions
+
+### 2.3 User Classes and Characteristics
+
+### 2.4 Operating Environment
+
+### 2.5 Constraints
+
+### 2.6 Assumptions and Dependencies
+
+## 3. Stakeholders & Actors
+
+### 3.1 Stakeholders
+
+### 3.2 Actors
+
+### 3.3 Actor Permission Overview
+
+## 4. Business Context
+
+### 4.1 Problem Statement
+
+### 4.2 Business Goals
+
+### 4.3 Success Criteria
+
+### 4.4 Current Workflow
+
+### 4.5 Target Workflow
+
+#### 4.5.1 Booking Workflow
+
+#### 4.5.2 Monthly Card Workflow
+
+#### 4.5.3 Check-in Workflow
+
+#### 4.5.4 Check-out & Payment Workflow
+
+## 5. Functional Requirements
+
+### 5.1 Feature List
+
+### 5.2 FR-001: Parking Structure Management
+
+### 5.3 FR-002: Driver Account & Vehicle Management
+
+### 5.4 FR-003: Vehicle Check-in
+
+### 5.5 FR-004: Parking Allocation
+
+### 5.6 FR-005: Booking Management
+
+### 5.7 FR-006: Monthly Card Management
+
+### 5.8 FR-007: Parking Session Tracking
+
+### 5.9 FR-008: Vehicle Check-out
+
+### 5.10 FR-009: Payment Management
+
+### 5.11 FR-010: Fee Calculation
+
+### 5.12 FR-011: Exception Handling
+
+### 5.13 FR-012: Operation Monitoring
+
+## 6. Business Rules
+
+### 6.1 Parking Structure Rules
+
+### 6.2 Hardware Simulation Rules
+
+### 6.3 Driver Account & Vehicle Rules
+
+### 6.4 Parking Allocation Rules
+
+### 6.5 Booking Rules
+
+### 6.6 Monthly Card Rules
+
+### 6.7 Payment Rules
+
+### 6.8 Fee Calculation Rules
+
+### 6.9 Parking Session Rules
+
+### 6.10 Vehicle Check-out Rules
+
+### 6.11 Exception Handling Rules
+
+### 6.12 Operation Monitoring Rules
+
+### 6.13 System State Rules
+
+### 6.14 Configurable Variables Rules
+
+### 6.15 Business Rules Summary
+
+## 7. Finalized Policy Decisions
+
+## 8. Concept, Entity & Physical Model
+
+### 8.1 Modeling Scope
+
+### 8.2 Entity Summary
+
+### 8.3 Physical Model Normalized v2
+
+#### 8.3.1 Modeling Rules
+
+##### 8.3.1.1 Database-Agnostic Rule
+
+##### 8.3.1.2 Naming Convention
+
+##### 8.3.1.3 Allowed Data Types
+
+##### 8.3.1.4 Generic Constraints
+
+#### 8.3.2 Relationship Summary From Conceptual Model
+
+#### 8.3.3 Physical Tables
+
+#### 8.3.4 Mermaid ERD With Physical Tables
+
+
+---
+
 # 1. Introduction
 
 ## 1.1 Purpose
@@ -1613,6 +1758,7 @@ Hệ thống hỗ trợ Staff xử lý các tình huống ngoại lệ trong v�
 - Given xe bị xác nhận đỗ sai khu vực  
   When Staff xử lý ngoại lệ  
   Then hệ thống cộng wrong zone penalty nếu chính sách áp dụng.
+
 ---
 
 ## FR-012: Operation Monitoring
@@ -2038,13 +2184,13 @@ Các quyết định đã chốt trong SRS được phản ánh trong model:
 | `notification` | lưu thông báo gửi đến account. |
 | `audit_log` | lưu log thao tác để truy vết. |
 
-#### 8.3 Physical Model Normalized v2
+#### 8.3 Physical Model Normalized
 
 > Mục tiêu: chỉnh sửa physical/logical model để AI CLI đọc được, bám theo relationship của `PBMS_Conceptual_Model.md`, đồng thời chuẩn hóa attribute/datatype từ các physical ERD đã cung cấp.
 
 ---
 
-### 8.3 1. Modeling Rules
+### 8.3.1 Modeling Rules
 
 #### 1.1 Database-Agnostic Rule
 
@@ -2122,7 +2268,7 @@ Quy ước chuẩn hóa:
 
 ---
 
-### 8.3 2. Relationship Summary From Conceptual Model
+### 8.3.2 Relationship Summary From Conceptual Model
 
 | ID | Relationship | Cardinality | Physical Direction |
 |---|---|---|---|
@@ -2171,7 +2317,7 @@ Removed relationship:
 
 ---
 
-### 8.3 3. Physical Tables
+### 8.3.3 Physical Tables
 
 #### 3.1 `role`
 
@@ -2651,7 +2797,7 @@ Purpose: lưu log thao tác để truy vết.
 
 ---
 
-### 8.3 4. Mermaid ERD With Physical Tables
+### 8.3.4 Mermaid ERD With Physical Tables
 
 ```mermaid
 erDiagram
@@ -2710,7 +2856,7 @@ erDiagram
 
 ---
 
-### 8.3 5. Cross-Domain Constraints
+### 8.3.5 Cross-Domain Constraints
 
 | Constraint ID | Constraint |
 |---|---|
@@ -2732,7 +2878,7 @@ erDiagram
 
 ---
 
-### 8.3 6. Notes / Deviations From Previous Version
+### 8.3.6 Notes / Deviations From Previous Version
 
 | Area | Previous Version | Updated Decision |
 |---|---|---|
@@ -2752,7 +2898,7 @@ erDiagram
 
 ---
 
-### 8.3 7. Verification Checklist
+### 8.3.7 Verification Checklist
 
 | Check | Expected |
 |---|---|
