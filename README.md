@@ -22,11 +22,12 @@ This repository contains the project's Software Requirements Specification (SRS)
 
 ## Main Documents
 
-| Document               | Description                                     |
-| ---------------------- | ----------------------------------------------- |
-| `PBMS_SRS_Document.md` | Complete generated SRS document                 |
-| `sections/`            | Source sections used to build the SRS           |
-| `build-srs.bat`        | Script for generating the complete SRS document |
+| Document                      | Description                                     |
+| ------------------------------| ----------------------------------------------- |
+| `PBMS_Feature_Actor_Based.md` | Features according to SRS document              |
+| `PBMS_SRS_Document.md`        | Complete generated SRS document                 |
+| `sections/`                   | Source sections used to build the SRS           |
+| `build-srs.bat`               | Script for generating the complete SRS document |
 
 ---
 
@@ -35,6 +36,7 @@ This repository contains the project's Software Requirements Specification (SRS)
 ```text
 .
 ├── README.md
+├── PBMS_Feature_Actor_Based.md
 ├── PBMS_SRS_Document.md
 ├── build-srs.bat
 └── sections/
