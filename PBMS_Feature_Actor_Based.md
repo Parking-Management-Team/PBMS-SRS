@@ -102,6 +102,8 @@
 ## Vehicle Check-in
 
 - Enter license plate manually
+- Capture check-in vehicle image (Base64 string) via camera/webcam
+- Run automatic license plate recognition (LPR) using external Plate Recognizer API
 - Validate vehicle and account information
 - Validate booking status and check-in grace time
 - Validate monthly subscription status
@@ -117,11 +119,12 @@
 ## Vehicle Check-out
 
 - Search active parking session
+- Capture check-out vehicle image (Base64 string) via camera/webcam
 - Verify license plate and card code
-- Calculate parking fee
-- Apply pricing window and rounding rules
+- Calculate parking fee using rule-based Pricing Engine (BasePricing, IncrementPricing, DailyCap, GracePeriod)
+- Apply cash rounding rules
 - Receive cash payment
-- Verify online payment
+- Verify online payment (VNPay integration)
 - Complete check-out
 - Release occupied zone capacity or slot
 
@@ -161,6 +164,8 @@
 - View payment summary
 - View incident summary
 - View check-in and check-out count
+- Submit shift report with cash reconciliation (expected vs actual, difference, note)
+- Track shift report submission status (Submitted, Approved, Rejected)
 
 ---
 
@@ -227,6 +232,12 @@
 - View refunded payments
 - View revenue statistics
 - Trace aggregated revenue payments
+
+## Shift Report Approval
+
+- View staff shift reports
+- Review cash reconciliation details and notes
+- Approve or reject shift reports (updating status to Approved or Rejected)
 
 ## Blacklist Management
 
