@@ -19,6 +19,7 @@ This directory contains the code-aligned Software Requirements Specification for
 |---|---|
 | PBMS_SRS_Document.md | Normative system, functional, non-functional, data, interface, risk, and traceability specification. |
 | PBMS_Feature_Actor_Based.md | Companion actor-to-feature mapping and authorization-coverage notes. |
+| Diagrams/PBMS_Business_Analysis.md | Activity swimlanes, logical ERDs, business-rule catalogue, and diagram traceability. |
 
 ## Maintenance Workflow
 
