@@ -29,6 +29,15 @@ This companion document presents the active PBMS business processes, logical dat
 ```plantuml
 @startuml
 title Registration and Authentication
+skinparam WrapWidth 250
+skinparam DefaultFontSize 48
+skinparam TitleFontSize 69
+skinparam TitleFontStyle bold
+skinparam SwimlaneTitleFontSize 60
+skinparam SwimlaneTitleFontStyle bold
+skinparam ArrowFontSize 42
+skinparam Nodesep 100
+skinparam Ranksep 100
 skinparam shadowing false
 skinparam activity {
   BackgroundColor #F7F7F7
@@ -127,11 +136,23 @@ endif
 ```plantuml
 @startuml
 title Parking Structure and Pricing Policy Management
+skinparam WrapWidth 250
+skinparam DefaultFontSize 48
+skinparam TitleFontSize 69
+skinparam TitleFontStyle bold
+skinparam SwimlaneTitleFontSize 60
+skinparam SwimlaneTitleFontStyle bold
+skinparam ArrowFontSize 42
+skinparam Nodesep 100
+skinparam Ranksep 100
 skinparam shadowing false
 skinparam activity {
   BackgroundColor #F7F7F7
   BorderColor #454545
   DiamondBackgroundColor #FFF2CC
+  DiamondBorderColor #8A6D1D
+  StartColor #2E7D32
+  EndColor #2E7D32
 }
 
 |Manager or Admin|
@@ -196,11 +217,23 @@ stop
 ```plantuml
 @startuml
 title Booking Lifecycle
+skinparam WrapWidth 300
+skinparam DefaultFontSize 48
+skinparam TitleFontSize 69
+skinparam TitleFontStyle bold
+skinparam SwimlaneTitleFontSize 60
+skinparam SwimlaneTitleFontStyle bold
+skinparam ArrowFontSize 42
+skinparam Nodesep 100
+skinparam Ranksep 100
 skinparam shadowing false
 skinparam activity {
   BackgroundColor #F7F7F7
   BorderColor #454545
   DiamondBackgroundColor #FFF2CC
+  DiamondBorderColor #8A6D1D
+  StartColor #2E7D32
+  EndColor #2E7D32
 }
 
 |Driver|
@@ -297,11 +330,23 @@ stop
 ```plantuml
 @startuml
 title Gate Check-in and Allocation
+skinparam WrapWidth 250
+skinparam DefaultFontSize 48
+skinparam TitleFontSize 69
+skinparam TitleFontStyle bold
+skinparam SwimlaneTitleFontSize 60
+skinparam SwimlaneTitleFontStyle bold
+skinparam ArrowFontSize 42
+skinparam Nodesep 100
+skinparam Ranksep 100
 skinparam shadowing false
 skinparam activity {
   BackgroundColor #F7F7F7
   BorderColor #454545
   DiamondBackgroundColor #FFF2CC
+  DiamondBorderColor #8A6D1D
+  StartColor #2E7D32
+  EndColor #2E7D32
 }
 
 |Staff|
@@ -372,11 +417,23 @@ stop
 ```plantuml
 @startuml
 title Session Query and Extension
+skinparam WrapWidth 250
+skinparam DefaultFontSize 48
+skinparam TitleFontSize 69
+skinparam TitleFontStyle bold
+skinparam SwimlaneTitleFontSize 60
+skinparam SwimlaneTitleFontStyle bold
+skinparam ArrowFontSize 42
+skinparam Nodesep 100
+skinparam Ranksep 100
 skinparam shadowing false
 skinparam activity {
   BackgroundColor #F7F7F7
   BorderColor #454545
   DiamondBackgroundColor #FFF2CC
+  DiamondBorderColor #8A6D1D
+  StartColor #2E7D32
+  EndColor #2E7D32
 }
 
 |Driver or Staff|
@@ -439,11 +496,23 @@ stop
 ```plantuml
 @startuml
 title Standard Checkout
+skinparam WrapWidth 250
+skinparam DefaultFontSize 48
+skinparam TitleFontSize 69
+skinparam TitleFontStyle bold
+skinparam SwimlaneTitleFontSize 60
+skinparam SwimlaneTitleFontStyle bold
+skinparam ArrowFontSize 42
+skinparam Nodesep 100
+skinparam Ranksep 100
 skinparam shadowing false
 skinparam activity {
   BackgroundColor #F7F7F7
   BorderColor #454545
   DiamondBackgroundColor #FFF2CC
+  DiamondBorderColor #8A6D1D
+  StartColor #2E7D32
+  EndColor #2E7D32
 }
 
 |Staff|
@@ -502,11 +571,23 @@ stop
 ```plantuml
 @startuml
 title Exceptional Checkout, Incidents, and Blacklists
+skinparam WrapWidth 250
+skinparam DefaultFontSize 48
+skinparam TitleFontSize 69
+skinparam TitleFontStyle bold
+skinparam SwimlaneTitleFontSize 60
+skinparam SwimlaneTitleFontStyle bold
+skinparam ArrowFontSize 42
+skinparam Nodesep 100
+skinparam Ranksep 100
 skinparam shadowing false
 skinparam activity {
   BackgroundColor #F7F7F7
   BorderColor #454545
   DiamondBackgroundColor #FFF2CC
+  DiamondBorderColor #8A6D1D
+  StartColor #2E7D32
+  EndColor #2E7D32
 }
 
 |Staff|
@@ -574,11 +655,23 @@ endif
 ```plantuml
 @startuml
 title Monitoring, Revenue, and Audit
+skinparam WrapWidth 250
+skinparam DefaultFontSize 48
+skinparam TitleFontSize 69
+skinparam TitleFontStyle bold
+skinparam SwimlaneTitleFontSize 60
+skinparam SwimlaneTitleFontStyle bold
+skinparam ArrowFontSize 42
+skinparam Nodesep 100
+skinparam Ranksep 100
 skinparam shadowing false
 skinparam activity {
   BackgroundColor #F7F7F7
   BorderColor #454545
   DiamondBackgroundColor #FFF2CC
+  DiamondBorderColor #8A6D1D
+  StartColor #2E7D32
+  EndColor #2E7D32
 }
 
 |Staff, Manager, or Admin|
