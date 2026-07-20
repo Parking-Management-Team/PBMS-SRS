@@ -1,15 +1,15 @@
 ---
 document_id: PBMS-FEATURE-ACTOR
 title: PBMS Feature and Actor Matrix
-version: 1.2
+version: 1.4
 status: REVIEW
-change_request: CR-GEN-001
-last_updated: 2026-07-18
+change_request: CR-GEN-003
+last_updated: 2026-07-20
 ---
 
 # PBMS Feature and Actor Matrix
 
-This companion document maps the current parking-system-web pages and parking-system-api behavior to actors. The normative requirement details are in PBMS_SRS_Document.md.
+This companion document maps the CR-GEN-003 release target and current implementation gaps to actors. The normative requirement details are in PBMS_SRS_Document.md; implementation direction is in PBMS_Remediation_Decision_Report.md.
 
 ## 1. Interpretation Rules
 
@@ -31,7 +31,7 @@ This companion document maps the current parking-system-web pages and parking-sy
 | Admin | Accounts, facilities, settings, incidents, blacklist, audit | JWT stored by web client; Admin route guard |
 | VNPay | Online payment processing and callback | Signed external callback |
 | Plate Recognizer | License plate OCR | Backend external-service credential |
-| Background workers | Timed booking, overtime, and pricing maintenance | In-process hosted services |
+| System | Timed booking and pricing-policy maintenance | In-process hosted services |
 
 ## 3. Actor-to-Feature Matrix
 
@@ -46,11 +46,11 @@ Legend: P = primary actor, S = supporting actor, V = view or own-data access, da
 | F-ALLOC-001 | Zone and slot allocation | - | - | P | P | S | - |
 | F-SESSION-001 | Parking sessions and extension | - | V | P | V | - | Pricing engine |
 | F-OPS-002 | Checkout and exceptional exit | - | - | P | V | - | Pricing engine |
-| F-PAY-001 | Payments and refund state | - | P | P | P | V | VNPay |
+| F-PAY-001 | Cash and VNPay payments | - | P | P | V | V | VNPay |
 | F-PRICE-001 | Pricing policies | - | - | - | P | S | Cleanup worker |
 | F-PRICE-002 | Fee and penalties | - | V | V | P | - | Pricing engine |
 | F-INC-002 | Incidents, cards, blacklists | - | V | P | P | P | - |
-| F-MON-001 | Monitoring, revenue, shift, audit | - | V | P | P | P | Revenue service |
+| F-MON-001 | Monitoring, revenue, and audit | - | V | P | P | P | Revenue service |
 | F-MONTH-001 | Monthly Subscription | - | - | - | - | - | DEPRECATED |
 
 The matrix describes current product surfaces, not a complete permission policy. Server-side authorization must be validated per endpoint.
@@ -64,8 +64,8 @@ The matrix describes current product surfaces, not a complete permission policy.
 | Register password account | Yes | Yes | Creates a Driver account after verification. |
 | Password login | Yes | Yes | BCrypt verification followed by direct JWT issuance. |
 | Google login or registration | Yes | Yes | Existing account signs in; new account completes email verification. |
-| Login OTP or MFA | Partial | Partial | Endpoint and UI branch exist, but the normal login service neither generates nor requires login OTP. |
-| Forgot password | No | No | Not implemented in the active baseline. |
+| Login OTP or MFA | No | Future backend only | Current login issues JWT directly; remove visible OTP branch and hide retained endpoint from release API surface. |
+| Forgot password | Remediation | Remediation | Implement recovery-specific OTP, short-lived single-use token, and reset endpoint under AUTH-02. |
 | Public support ticket | No | No | Help content exists inside dashboards; no public support workflow was found. |
 
 ## 5. Driver Capabilities
@@ -83,7 +83,8 @@ The matrix describes current product surfaces, not a complete permission policy.
 | View sessions and history | Yes | Yes | Driver pages present active and historical records. |
 | View or initiate payments | Yes | Yes | Cash is operationally staff-facing; online flow redirects to VNPay. |
 | View reports | Yes | Yes | Driver report page exists; scope is limited to exposed account data. |
-| Purchase Monthly Subscription | No | No | Deprecated; no active frontend or backend flow. |
+| Submit incident report | Yes | Yes | Text description only; every active Incident Type is visible; API validates owned active session and active type. |
+| Purchase Monthly Subscription | Remove | Remove | Monthly Subscription and legacy compatibility must be removed from runtime code and schema. |
 
 ## 6. Staff Capabilities
 
@@ -108,15 +109,15 @@ The matrix describes current product surfaces, not a complete permission policy.
 | View bookings and sessions | Yes | Yes | Operational management pages exist. |
 | Manage pricing policies and rules | Yes | Yes | Backend supports Priority; current pricing UI does not clearly expose it. |
 | Manage incidents, cards, blacklists, vehicles | Yes | Yes | Management pages and controllers exist. |
-| Review payments and refunds | Yes | Yes | Refund endpoint records REFUND_PENDING to REFUNDED; external refund is not claimed. |
+| Review payments | Yes | Yes | Refund controls and states must be removed from the project. |
 | View revenue | Yes | Yes | Calculated dynamically from PAID payments in UTC+7. |
-| Configure Monthly Subscription price | Legacy | Yes | SubscriptionPriceConfig remains, but it has no active subscription consumer. |
+| Configure Monthly Subscription price | No | No | Monthly Subscription and SubscriptionPriceConfig must be removed after reviewed migration. |
 
 ## 8. Admin Capabilities
 
 | Capability | UI | API | Key conditions |
 |---|:---:|:---:|---|
-| Manage accounts and roles | Yes | Yes | Account controller has authorization; permission-matrix enforcement is incomplete. |
+| Manage accounts, roles, and permissions | Remediation | Remediation | Admin manages RolePermission mappings; PBMS endpoint policies consume stable Permission codes and enforce ownership separately. |
 | Manage selected facilities | Yes | Yes | Admin facility pages exist. |
 | View audit logs | Yes | Yes | Audit-log controller has authorization. |
 | Manage system configuration | Yes | Yes | Generic key-value settings; business services consume selected keys. |
@@ -131,23 +132,18 @@ The matrix describes current product surfaces, not a complete permission policy.
 - Changes unpaid Pending bookings past deadline to Expired.
 - Changes Confirmed bookings past check-in grace to NoShow.
 
-### 9.2 Overtime Warning Worker
-
-- Runs approximately every minute.
-- Evaluates overtime warning conditions for parking sessions.
-
-### 9.3 Pricing Policy Cleanup Worker
+### 9.2 Pricing Policy Cleanup Worker
 
 - Runs approximately every twelve hours.
 - Deactivates active policies whose effective period has ended.
 
-### 9.4 VNPay
+### 9.3 VNPay
 
 - Receives signed online-payment redirects.
 - Returns signed IPN and browser-return parameters.
-- Does not provide a documented automatic-refund flow in the current application service.
+- Provides no Refund capability in the current project.
 
-### 9.5 Plate Recognizer
+### 9.4 Plate Recognizer
 
 - Receives Base64 image content from the backend with Vietnam region context.
 - Returns plate candidates; the backend initially selects the highest-confidence result.
@@ -167,29 +163,32 @@ The matrix describes current product surfaces, not a complete permission policy.
 
 ## 11. Authorization Coverage Warning
 
-The following controller groups currently declare authorization: Accounts, AuditLogs, PricingPolicies, PricingEngine, PenaltyConfigs, and SubscriptionPriceConfigs.
+The following controller groups currently declare authorization: Accounts, AuditLogs, PricingPolicies, PricingEngine, and PenaltyConfigs. SubscriptionPriceConfigs is a removal target.
 
 Many other operational controllers do not declare authorization attributes, including booking, structure, session, payment, revenue, card, incident, blacklist, vehicle, dashboard, and system-configuration areas. This list is an implementation audit result, not permission to expose the endpoints publicly.
 
 Production acceptance requires:
 
 - authenticated-by-default API policy or explicit authorization on every non-public endpoint;
-- role checks matching this document's intended actor ownership;
+- a stable Permission code for every non-public endpoint and runtime enforcement from RolePermission;
+- an Admin-only role-permission management API/workspace with cache invalidation/versioning;
 - server-side account and resource ownership validation;
-- automated anonymous, wrong-role, and wrong-owner tests.
+- automated anonymous, missing-permission, wrong-owner, and mapping-change tests.
 
 ## 12. Deprecated and Dormant Capability Map
 
 | Item | Classification | Current handling |
 |---|---|---|
-| Monthly Subscription purchase, renewal, and use | DEPRECATED | Removed from active API and frontend; excluded from acceptance scope. |
-| MonthlySubscription entity and database table | Legacy schema | Retained for compatibility and historical data. |
-| MonthlySubscriptionId fields | Legacy schema | Not used by current session, payment, booking, or revenue flow. |
-| SubscriptionPriceConfig | Dormant supporting API | Persists configuration but has no active subscription consumer. |
+| Refund UI, endpoint, service, and states | Remove from project | Remove through PAY-01 code cleanup and reviewed historical-payment migration. |
+| Monthly Subscription entity, fields, API, UI, and configuration | Remove from project | Do not retain compatibility behavior; use MONTH-01 dependency-ordered migration. |
+| Notification and OvertimeWarningWorker | Excluded release surface | Backend code may remain only when non-exposed and non-running. |
+| Shift Report and shift handover | Excluded release surface | Backend code may remain only when non-exposed and non-running. |
 | RevenueStatistic tables | Dormant | Current revenue reads PAID Payment records directly. |
-| GracePeriodRule in active fee calculation | Partial | Data model remains; active PricingEngine does not apply it. |
-| Stored permission matrix | Partial | Entities exist; endpoint enforcement does not consistently use them. |
-| Login OTP verification | Partial and unreachable | Controller and frontend branch exist; normal login does not enter the flow. |
+| GracePeriodRule in active fee calculation | Remediation | Keep and port it into the active PricingEngine, then retire duplicate legacy fee behavior. |
+| Stored permission matrix | Remediation | Retain Role, Permission, and RolePermission; make endpoint policies consume them and provide Admin-only mapping management. |
+| Login OTP verification | Future backend only | Current login uses direct JWT; no frontend branch or release API exposure. |
+| PricingCalculationLog | Remediation | Log committed payable calculations exactly once; preview calculations create no log. |
+| Automatic API retry | Remove from project | Remove unused `retryAttempts`; retain timeout and explicit user retry only. |
 
 ## 13. Feature Acceptance Pointers
 
@@ -202,21 +201,23 @@ Production acceptance requires:
 | F-ALLOC-001 | FR-ALLOC-001 | Type-compatible allocation and concurrency |
 | F-SESSION-001 | FR-SESSION-001 to FR-SESSION-002 | Query scope, extension, conflict cap |
 | F-OPS-002 | FR-OPS-004 to FR-OPS-005 | Checkout, unpaid, lost card, rollback |
-| F-PAY-001 | FR-PAY-001 to FR-PAY-003 | Cash, signed VNPay, idempotency, refund state |
+| F-PAY-001 | FR-PAY-001 to FR-PAY-002 | Cash, signed VNPay, and idempotency; inspect absence of refund surface |
 | F-PRICE-001 | FR-PRICE-001 | Effective range, overlap, priority, cleanup |
-| F-PRICE-002 | FR-PRICE-002 to FR-PRICE-003 | Segmentation, blocks, threshold, cap, penalties |
+| F-PRICE-002 | FR-PRICE-002 to FR-PRICE-004 | Segmentation, Grace Period, threshold, cap, penalties, and committed logs |
 | F-INC-002 | FR-INC-001, FR-CARD-001, FR-BLK-001 | Incident lifecycle and operational controls |
 | F-MON-001 | FR-RPT-001, FR-AUD-001 | PAID-only revenue, UTC+7, and audit access |
-| F-MONTH-001 | FR-MONTH-001 | Verify feature remains absent from active surfaces |
+| F-MONTH-001 | FR-MONTH-001 | Verify runtime code and schema are removed after migration |
 
 ## 14. Review Items
 
-- Decide whether login uses direct JWT issuance or mandatory OTP/MFA.
-- Define the production server-side role and ownership policy.
-- Decide whether the active PricingEngine must apply GracePeriodRule.
-- Define who may approve refunds.
+- Remove the visible login-OTP branch and implement recovery-specific password reset.
+- Complete the production server-side role and ownership policy for every non-public endpoint.
+- Apply Grace Period in the active PricingEngine and implement committed calculation logging.
+- Remove Refund and Monthly Subscription through reviewed code/data migrations.
+- Remove incident file upload UI while retaining text-only reports and every active Incident Type.
+- Hide/disable Notification and Shift Report code for the current release and remove unused automatic retry configuration.
 - Define image, plate, incident, payment, and audit retention periods.
 
 ---
 
-End of PBMS Feature and Actor Matrix version 1.2, status REVIEW.
+End of PBMS Feature and Actor Matrix version 1.4, status REVIEW.
